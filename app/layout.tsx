@@ -28,6 +28,14 @@ export const metadata: Metadata = {
     "Lebanon Developer",
   ],
   authors: [{ name: "Hassan Mezher" }],
+  icons: {
+    icon: [
+      { url: "/favicon.png", type: "image/png", sizes: "600x600" },
+      { url: "/logo.png", type: "image/png", sizes: "800x600" },
+    ],
+    shortcut: "/favicon.png",
+    apple: [{ url: "/apple-touch-icon.png", type: "image/png", sizes: "180x180" }],
+  },
   openGraph: {
     title: "Hassan Mezher | Full-Stack Web Developer",
     description:

@@ -1,11 +1,11 @@
 import { mkdir, writeFile } from "node:fs/promises";
 
-const output = "public/Hassan-Mezher-CV.pdf";
+const output = "public/generated-Hassan_Mezher_CV.pdf";
 
 const lines = [
   { text: "Hassan Mezher", size: 24, y: 760 },
   { text: "Full-Stack Web Developer", size: 14, y: 733 },
-  { text: "Lebanon | hassanmezher084@gmail.com | LinkedIn: placeholder | GitHub: placeholder", size: 10, y: 713 },
+  { text: "Lebanon | hassanmezher084@gmail.com | linkedin.com/in/hassan-mezher-7475b6304 | github.com/hassanlmezher", size: 10, y: 713 },
   { text: "Summary", size: 15, y: 675 },
   {
     text: "Computer Science graduate and full-stack web developer building fast, scalable, user-focused web applications across frontend and backend systems.",

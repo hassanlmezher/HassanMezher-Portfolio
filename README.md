@@ -1,6 +1,6 @@
 # Hassan Mezher Portfolio
 
-Modern portfolio website built with Next.js, TypeScript, Tailwind CSS, Framer Motion, and React Three Fiber.
+Modern portfolio website built with Next.js, TypeScript, Tailwind CSS, Framer Motion, and Three.js.
 
 ## Run Locally
 
@@ -32,11 +32,5 @@ npm run verify:visual
 The download button uses:
 
 ```text
-public/Hassan-Mezher-CV.pdf
-```
-
-Regenerate it with:
-
-```bash
-npm run generate:cv
+public/Hassan_Mezher_CV.pdf
 ```

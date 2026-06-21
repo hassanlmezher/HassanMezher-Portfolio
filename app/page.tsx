@@ -24,6 +24,13 @@ const navItems = [
   { label: "Contact", href: "#contact" },
 ];
 
+const contactLinks = {
+  email: "hassanmezher084@gmail.com",
+  linkedin: "https://www.linkedin.com/in/hassan-mezher-7475b6304/",
+  github: "https://github.com/hassanlmezher",
+  cv: "/Hassan_Mezher_CV.pdf",
+};
+
 const projects = [
   {
     name: "Shopora",
@@ -121,7 +128,7 @@ function Hero() {
               Read the API
               <ArrowUpRight size={18} />
             </a>
-            <a href="/Hassan-Mezher-CV.pdf" download className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-slate-300 bg-white px-6 text-sm font-semibold text-slate-950 transition hover:-translate-y-0.5 hover:border-slate-950">
+            <a href={contactLinks.cv} download className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-slate-300 bg-white px-6 text-sm font-semibold text-slate-950 transition hover:-translate-y-0.5 hover:border-slate-950">
               Download CV
               <Download size={18} />
             </a>
@@ -163,7 +170,7 @@ function StickyNav() {
           ))}
         </div>
 
-        <a href="mailto:hassanmezher084@gmail.com" className="hidden min-h-10 items-center gap-2 rounded-full bg-blue-600 px-4 text-sm font-semibold text-white transition hover:bg-slate-950 md:inline-flex">
+        <a href={`mailto:${contactLinks.email}`} className="hidden min-h-10 items-center gap-2 rounded-full bg-blue-600 px-4 text-sm font-semibold text-white transition hover:bg-slate-950 md:inline-flex">
           Contact
           <Mail size={16} />
         </a>
@@ -287,7 +294,7 @@ function Contact() {
     const email = String(form.get("email") ?? "");
     const message = String(form.get("message") ?? "");
     const body = [`Name: ${name}`, `Email: ${email}`, "", message].join("\n");
-    window.location.href = `mailto:hassanmezher084@gmail.com?subject=${encodeURIComponent("Portfolio contact")}&body=${encodeURIComponent(body)}`;
+    window.location.href = `mailto:${contactLinks.email}?subject=${encodeURIComponent("Portfolio contact")}&body=${encodeURIComponent(body)}`;
   }
 
   return (
@@ -298,15 +305,15 @@ function Contact() {
           <h2 className="mt-8 text-balance text-4xl font-semibold tracking-[-0.04em]">POST /contact</h2>
           <p className="mt-4 text-slate-300">Use this endpoint for roles, project ideas, or collaboration.</p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <a href="mailto:hassanmezher084@gmail.com" className="inline-flex min-h-11 items-center gap-2 rounded-full bg-white px-5 text-sm font-semibold text-slate-950 hover:bg-lime-200">
+            <a href={`mailto:${contactLinks.email}`} className="inline-flex min-h-11 items-center gap-2 rounded-full bg-white px-5 text-sm font-semibold text-slate-950 hover:bg-lime-200">
               <Mail size={17} />
               Email
             </a>
-            <a href="#" className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/15 px-5 text-sm font-semibold text-white hover:bg-white/10">
+            <a href={contactLinks.linkedin} target="_blank" rel="noreferrer" className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/15 px-5 text-sm font-semibold text-white hover:bg-white/10">
               <Linkedin size={17} />
               LinkedIn
             </a>
-            <a href="#" className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/15 px-5 text-sm font-semibold text-white hover:bg-white/10">
+            <a href={contactLinks.github} target="_blank" rel="noreferrer" className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/15 px-5 text-sm font-semibold text-white hover:bg-white/10">
               <Github size={17} />
               GitHub
             </a>
