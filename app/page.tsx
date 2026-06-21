@@ -26,13 +26,11 @@ const navItems = [
   { label: "Contact", href: "#contact" },
 ];
 
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
-
 const contactLinks = {
   email: "hassanmezher084@gmail.com",
   linkedin: "https://www.linkedin.com/in/hassan-mezher-7475b6304/",
   github: "https://github.com/hassanlmezher",
-  cv: `${basePath}/Hassan_Mezher_CV.pdf`,
+  cv: "/Hassan_Mezher_CV.pdf",
 };
 
 const projects = [

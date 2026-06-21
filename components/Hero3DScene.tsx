@@ -210,10 +210,6 @@ export function Hero3DScene() {
 
     const animate = () => {
       frame += 0.01;
-      if (!readyRef.current) {
-        readyRef.current = true;
-        setWebglReady(true);
-      }
       root.rotation.y += 0.004;
       root.rotation.x += (pointer.y * 0.12 - root.rotation.x) * 0.035;
       root.rotation.z += (pointer.x * 0.06 - root.rotation.z) * 0.03;
@@ -223,6 +219,10 @@ export function Hero3DScene() {
       particles.rotation.y -= 0.0018;
       blueLight.intensity = 64 + Math.sin(frame * 2) * 7;
       renderer.render(scene, camera);
+      if (!readyRef.current && canvas.width > 300 && canvas.height > 250) {
+        readyRef.current = true;
+        setWebglReady(true);
+      }
       animationId = requestAnimationFrame(animate);
     };
 
@@ -251,7 +251,7 @@ export function Hero3DScene() {
   return (
     <div className="relative h-[420px] min-h-[420px] overflow-hidden rounded-[2rem] border border-[var(--line)] bg-[var(--surface)] shadow-[0_30px_100px_var(--shadow)] backdrop-blur sm:h-[560px]">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(36,84,255,0.14),transparent_42%),radial-gradient(circle_at_82%_18%,rgba(163,230,53,0.18),transparent_28%)]" />
-      <div className={`absolute inset-0 grid place-items-center p-5 transition-opacity ${webglReady ? "opacity-0" : "opacity-100"}`}>
+      <div className={`absolute inset-0 z-10 grid place-items-center p-5 transition-opacity ${webglReady ? "pointer-events-none opacity-0" : "opacity-100"}`}>
         <div className="grid w-full max-w-sm gap-3">
           {[
             ["GET", "/profile", "text-lime-300"],
@@ -265,7 +265,7 @@ export function Hero3DScene() {
           ))}
         </div>
       </div>
-      <canvas ref={canvasRef} className="relative h-full w-full" aria-label="Interactive 3D portfolio API visualization" />
+      <canvas ref={canvasRef} className={`relative h-full w-full transition-opacity ${webglReady ? "opacity-100" : "opacity-0"}`} aria-label="Interactive 3D portfolio API visualization" />
       <div className="pointer-events-none absolute left-5 top-5 rounded-full border border-[var(--line)] bg-[var(--surface)] px-3 py-1.5 text-xs font-semibold text-[var(--muted)] shadow-sm backdrop-blur">
         live API map
       </div>

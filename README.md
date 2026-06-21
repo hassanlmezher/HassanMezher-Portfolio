@@ -17,6 +17,12 @@ Open:
 http://localhost:3000
 ```
 
+To open it on your phone, keep your phone and Mac on the same Wi-Fi and open the Network URL printed by Next. On this Mac it is usually:
+
+```text
+http://192.168.0.106:3000
+```
+
 If port `3000` is already busy, stop the old server with `Ctrl+C` in the terminal that is running it, then run `npm run dev` again.
 
 ## Checks
@@ -27,27 +33,36 @@ npm run build
 npm run verify:visual
 ```
 
-## Preview The Static Export
+## Preview Production Locally
 
 ```bash
 npm run build
 npm run preview
 ```
 
-## Deploy To GitHub Pages
+Open:
 
-This repo includes `.github/workflows/deploy.yml`.
+```text
+http://localhost:3000
+```
+
+For mobile testing, open the Network URL printed by `npm run preview`.
+
+## Deploy To Vercel
 
 1. Push the project to GitHub.
-2. Go to the repository settings.
-3. Open `Pages`.
-4. Set `Source` to `GitHub Actions`.
-5. Push to `main` or run the workflow manually.
+2. Go to Vercel and choose `Add New Project`.
+3. Import the GitHub repository.
+4. Keep the default framework preset as `Next.js`.
+5. Use these commands:
 
-The workflow automatically handles the GitHub Pages base path:
+```text
+Install Command: npm install
+Build Command: npm run build
+Output Directory: leave the Vercel default
+```
 
-- `username.github.io` repositories deploy at `/`
-- normal project repositories deploy at `/<repo-name>/`
+No custom environment variables are required for the current portfolio.
 
 ## CV
 
