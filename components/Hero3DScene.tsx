@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 
 function createLabelTexture(method: string, endpoint: string, color: string) {
@@ -55,6 +55,8 @@ function roundRect(context: CanvasRenderingContext2D, x: number, y: number, widt
 
 export function Hero3DScene() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const readyRef = useRef(false);
+  const [webglReady, setWebglReady] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -62,12 +64,18 @@ export function Hero3DScene() {
       return;
     }
 
-    const renderer = new THREE.WebGLRenderer({
-      canvas,
-      alpha: true,
-      antialias: true,
-      preserveDrawingBuffer: true,
-    });
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({
+        canvas,
+        alpha: true,
+        antialias: true,
+        preserveDrawingBuffer: true,
+      });
+    } catch {
+      canvas.dataset.webgl = "unavailable";
+      return;
+    }
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.7));
 
     const scene = new THREE.Scene();
@@ -202,6 +210,10 @@ export function Hero3DScene() {
 
     const animate = () => {
       frame += 0.01;
+      if (!readyRef.current) {
+        readyRef.current = true;
+        setWebglReady(true);
+      }
       root.rotation.y += 0.004;
       root.rotation.x += (pointer.y * 0.12 - root.rotation.x) * 0.035;
       root.rotation.z += (pointer.x * 0.06 - root.rotation.z) * 0.03;
@@ -239,6 +251,20 @@ export function Hero3DScene() {
   return (
     <div className="relative h-[420px] min-h-[420px] overflow-hidden rounded-[2rem] border border-[var(--line)] bg-[var(--surface)] shadow-[0_30px_100px_var(--shadow)] backdrop-blur sm:h-[560px]">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(36,84,255,0.14),transparent_42%),radial-gradient(circle_at_82%_18%,rgba(163,230,53,0.18),transparent_28%)]" />
+      <div className={`absolute inset-0 grid place-items-center p-5 transition-opacity ${webglReady ? "opacity-0" : "opacity-100"}`}>
+        <div className="grid w-full max-w-sm gap-3">
+          {[
+            ["GET", "/profile", "text-lime-300"],
+            ["GET", "/stack", "text-sky-300"],
+            ["GET", "/projects", "text-orange-300"],
+            ["POST", "/contact", "text-rose-300"],
+          ].map(([method, endpoint, color]) => (
+            <div key={endpoint} className="rounded-2xl bg-[#101827] px-4 py-3 font-mono text-sm text-white shadow-lg">
+              <span className={color}>{method}</span> <span>{endpoint}</span>
+            </div>
+          ))}
+        </div>
+      </div>
       <canvas ref={canvasRef} className="relative h-full w-full" aria-label="Interactive 3D portfolio API visualization" />
       <div className="pointer-events-none absolute left-5 top-5 rounded-full border border-[var(--line)] bg-[var(--surface)] px-3 py-1.5 text-xs font-semibold text-[var(--muted)] shadow-sm backdrop-blur">
         live API map

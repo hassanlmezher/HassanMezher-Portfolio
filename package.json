@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -H 0.0.0.0",
     "build": "next build",
-    "start": "next start",
+    "start": "serve out",
+    "preview": "serve out",
     "lint": "eslint .",
     "generate:cv": "node scripts/create-cv-pdf.mjs",
     "verify:visual": "node scripts/visual-check.mjs"
@@ -27,6 +28,7 @@
     "@types/three": "^0.184.1",
     "eslint": "^9.39.2",
     "eslint-config-next": "^16.0.10",
+    "serve": "^14.2.6",
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3"
   }

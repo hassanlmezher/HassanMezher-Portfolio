@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
@@ -30,11 +32,11 @@ export const metadata: Metadata = {
   authors: [{ name: "Hassan Mezher" }],
   icons: {
     icon: [
-      { url: "/favicon.png", type: "image/png", sizes: "600x600" },
-      { url: "/logo.png", type: "image/png", sizes: "800x600" },
+      { url: `${basePath}/favicon.png`, type: "image/png", sizes: "600x600" },
+      { url: `${basePath}/logo.png`, type: "image/png", sizes: "800x600" },
     ],
-    shortcut: "/favicon.png",
-    apple: [{ url: "/apple-touch-icon.png", type: "image/png", sizes: "180x180" }],
+    shortcut: `${basePath}/favicon.png`,
+    apple: [{ url: `${basePath}/apple-touch-icon.png`, type: "image/png", sizes: "180x180" }],
   },
   openGraph: {
     title: "Hassan Mezher | Full-Stack Web Developer",

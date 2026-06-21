@@ -26,11 +26,13 @@ const navItems = [
   { label: "Contact", href: "#contact" },
 ];
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 const contactLinks = {
   email: "hassanmezher084@gmail.com",
   linkedin: "https://www.linkedin.com/in/hassan-mezher-7475b6304/",
   github: "https://github.com/hassanlmezher",
-  cv: "/Hassan_Mezher_CV.pdf",
+  cv: `${basePath}/Hassan_Mezher_CV.pdf`,
 };
 
 const projects = [
@@ -91,7 +93,7 @@ function ApiShell({
   return (
     <motion.div
       variants={fadeUp}
-      initial="hidden"
+      initial={false}
       whileInView="visible"
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.5 }}
@@ -114,7 +116,7 @@ function Hero() {
   return (
     <section className="grid min-h-[calc(100svh-74px)] items-center px-5 pb-8 pt-8 sm:px-8 lg:px-10">
       <div className="mx-auto grid w-full max-w-7xl items-center gap-10 lg:grid-cols-[0.78fr_1.22fr]">
-        <motion.div initial="hidden" animate="visible" transition={{ staggerChildren: 0.08 }} className="max-w-3xl">
+        <motion.div initial={false} animate="visible" transition={{ staggerChildren: 0.08 }} className="max-w-3xl">
           <motion.div variants={fadeUp} className="mb-7 inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-sm font-medium text-[var(--muted)] shadow-sm">
             <Terminal size={15} className="text-blue-600" />
             portfolio.init()
@@ -137,7 +139,7 @@ function Hero() {
           </motion.div>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: "easeOut", delay: 0.18 }}>
+        <motion.div initial={false} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: "easeOut", delay: 0.18 }}>
           <Hero3DScene />
         </motion.div>
       </div>
@@ -244,21 +246,25 @@ function ApiSection() {
     <section id="api" className="px-5 py-12 sm:px-8 lg:px-10">
       <div className="mx-auto grid max-w-7xl gap-5 lg:grid-cols-[0.95fr_1.05fr]">
         <ApiShell title="GET /profile" className="lg:min-h-[330px]">
-          <pre className="overflow-hidden font-mono text-sm leading-7 text-slate-300 sm:text-base">
-            <span className="text-slate-500">{"{"}</span>
-            {"\n  "}
-            <span className="text-sky-300">&quot;name&quot;</span>: <span className="text-lime-300">&quot;Hassan Mezher&quot;</span>,
-            {"\n  "}
-            <span className="text-sky-300">&quot;role&quot;</span>: <span className="text-lime-300">&quot;Full-Stack Web Developer&quot;</span>,
-            {"\n  "}
-            <span className="text-sky-300">&quot;education&quot;</span>: <span className="text-lime-300">&quot;Computer Science Graduate&quot;</span>,
-            {"\n  "}
-            <span className="text-sky-300">&quot;experience&quot;</span>: <span className="text-lime-300">&quot;Hurdle Solutions · Remote&quot;</span>,
-            {"\n  "}
-            <span className="text-sky-300">&quot;focus&quot;</span>: [<span className="text-lime-300">&quot;clean UI&quot;</span>, <span className="text-lime-300">&quot;APIs&quot;</span>, <span className="text-lime-300">&quot;shipping&quot;</span>]
-            {"\n"}
-            <span className="text-slate-500">{"}"}</span>
-          </pre>
+          <div className="grid gap-1 overflow-hidden font-mono text-sm leading-7 text-slate-300 sm:text-base">
+            <p className="text-slate-500">{"{"}</p>
+            <p className="break-words pl-4">
+              <span className="text-sky-300">&quot;name&quot;</span>: <span className="text-lime-300">&quot;Hassan Mezher&quot;</span>,
+            </p>
+            <p className="break-words pl-4">
+              <span className="text-sky-300">&quot;role&quot;</span>: <span className="text-lime-300">&quot;Full-Stack Web Developer&quot;</span>,
+            </p>
+            <p className="break-words pl-4">
+              <span className="text-sky-300">&quot;education&quot;</span>: <span className="text-lime-300">&quot;Computer Science Graduate&quot;</span>,
+            </p>
+            <p className="break-words pl-4">
+              <span className="text-sky-300">&quot;experience&quot;</span>: <span className="text-lime-300">&quot;Hurdle Solutions · Remote&quot;</span>,
+            </p>
+            <p className="break-words pl-4">
+              <span className="text-sky-300">&quot;focus&quot;</span>: [<span className="text-lime-300">&quot;clean UI&quot;</span>, <span className="text-lime-300">&quot;APIs&quot;</span>, <span className="text-lime-300">&quot;shipping&quot;</span>]
+            </p>
+            <p className="text-slate-500">{"}"}</p>
+          </div>
         </ApiShell>
 
         <ApiShell title="GET /stack" className="lg:min-h-[330px]">
@@ -302,7 +308,7 @@ function Work() {
             <motion.article
               key={project.name}
               variants={fadeUp}
-              initial="hidden"
+              initial={false}
               whileInView="visible"
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.45, delay: index * 0.04 }}
