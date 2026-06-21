@@ -148,21 +148,7 @@ function Hero() {
 function StickyNav() {
   const [open, setOpen] = useState(false);
   const [stuck, setStuck] = useState(false);
-  const [theme, setTheme] = useState<"light" | "dark">(() => {
-    if (typeof window === "undefined") {
-      return "light";
-    }
-
-    const storedTheme = window.localStorage.getItem("theme");
-    if (storedTheme === "dark" || storedTheme === "light") {
-      document.documentElement.classList.toggle("dark", storedTheme === "dark");
-      return storedTheme;
-    }
-
-    const preferredTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-    document.documentElement.classList.toggle("dark", preferredTheme === "dark");
-    return preferredTheme;
-  });
+  const [theme, setTheme] = useState<"light" | "dark">("light");
 
   useEffect(() => {
     const onScroll = () => setStuck(window.scrollY > window.innerHeight - 110);
@@ -171,10 +157,14 @@ function StickyNav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    document.documentElement.classList.remove("dark");
+    window.localStorage.removeItem("theme");
+  }, []);
+
   function toggleTheme() {
     const nextTheme = theme === "dark" ? "light" : "dark";
     setTheme(nextTheme);
-    window.localStorage.setItem("theme", nextTheme);
     document.documentElement.classList.toggle("dark", nextTheme === "dark");
   }
 
