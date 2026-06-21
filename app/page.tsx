@@ -11,7 +11,9 @@ import {
   Linkedin,
   Mail,
   Menu,
+  Moon,
   Server,
+  Sun,
   Terminal,
   X,
 } from "lucide-react";
@@ -93,7 +95,7 @@ function ApiShell({
       whileInView="visible"
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.5 }}
-      className={`rounded-[1.6rem] bg-[#101827] p-5 text-white shadow-[0_26px_80px_rgba(15,23,42,0.18)] ${className}`}
+      className={`rounded-[1.6rem] bg-[var(--panel)] p-5 text-[var(--panel-text)] shadow-[0_26px_80px_var(--shadow)] ${className}`}
     >
       <div className="mb-5 flex items-center justify-between gap-4">
         <Database size={22} className="text-lime-300" />
@@ -105,7 +107,7 @@ function ApiShell({
 }
 
 function Badge({ children }: { children: React.ReactNode }) {
-  return <span className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-600 shadow-sm">{children}</span>;
+  return <span className="rounded-full border border-[var(--line)] bg-[var(--chip)] px-3 py-1.5 text-sm font-medium text-[var(--muted)] shadow-sm">{children}</span>;
 }
 
 function Hero() {
@@ -113,22 +115,22 @@ function Hero() {
     <section className="grid min-h-[calc(100svh-74px)] items-center px-5 pb-8 pt-8 sm:px-8 lg:px-10">
       <div className="mx-auto grid w-full max-w-7xl items-center gap-10 lg:grid-cols-[0.78fr_1.22fr]">
         <motion.div initial="hidden" animate="visible" transition={{ staggerChildren: 0.08 }} className="max-w-3xl">
-          <motion.div variants={fadeUp} className="mb-7 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm">
+          <motion.div variants={fadeUp} className="mb-7 inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-sm font-medium text-[var(--muted)] shadow-sm">
             <Terminal size={15} className="text-blue-600" />
             portfolio.init()
           </motion.div>
-          <motion.h1 variants={fadeUp} className="text-balance text-5xl font-semibold leading-[0.98] tracking-[-0.045em] text-slate-950 sm:text-6xl lg:text-7xl">
+          <motion.h1 variants={fadeUp} className="text-balance text-5xl font-semibold leading-[0.98] tracking-[-0.045em] text-[var(--foreground)] sm:text-6xl lg:text-7xl">
             Hassan Mezher builds clean web apps from UI to API.
           </motion.h1>
-          <motion.p variants={fadeUp} className="mt-7 max-w-2xl text-lg leading-8 text-slate-600 sm:text-xl">
+          <motion.p variants={fadeUp} className="mt-7 max-w-2xl text-lg leading-8 text-[var(--muted)] sm:text-xl">
             Computer Science graduate and full-stack web developer focused on sharp interfaces, reliable backend logic, and practical product details.
           </motion.p>
           <motion.div variants={fadeUp} className="mt-9 flex flex-col gap-3 sm:flex-row">
-            <a href="#api" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-slate-950 px-6 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-blue-600">
+            <a href="#api" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--foreground)] px-6 text-sm font-semibold text-[var(--background)] transition hover:-translate-y-0.5 hover:bg-blue-600 hover:text-white">
               Read the API
               <ArrowUpRight size={18} />
             </a>
-            <a href={contactLinks.cv} download className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-slate-300 bg-white px-6 text-sm font-semibold text-slate-950 transition hover:-translate-y-0.5 hover:border-slate-950">
+            <a href={contactLinks.cv} download className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface)] px-6 text-sm font-semibold text-[var(--foreground)] transition hover:-translate-y-0.5 hover:border-[var(--foreground)]">
               Download CV
               <Download size={18} />
             </a>
@@ -146,6 +148,21 @@ function Hero() {
 function StickyNav() {
   const [open, setOpen] = useState(false);
   const [stuck, setStuck] = useState(false);
+  const [theme, setTheme] = useState<"light" | "dark">(() => {
+    if (typeof window === "undefined") {
+      return "light";
+    }
+
+    const storedTheme = window.localStorage.getItem("theme");
+    if (storedTheme === "dark" || storedTheme === "light") {
+      document.documentElement.classList.toggle("dark", storedTheme === "dark");
+      return storedTheme;
+    }
+
+    const preferredTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    document.documentElement.classList.toggle("dark", preferredTheme === "dark");
+    return preferredTheme;
+  });
 
   useEffect(() => {
     const onScroll = () => setStuck(window.scrollY > window.innerHeight - 110);
@@ -154,43 +171,70 @@ function StickyNav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  function toggleTheme() {
+    const nextTheme = theme === "dark" ? "light" : "dark";
+    setTheme(nextTheme);
+    window.localStorage.setItem("theme", nextTheme);
+    document.documentElement.classList.toggle("dark", nextTheme === "dark");
+  }
+
   return (
-    <div className="sticky top-0 z-50 border-y border-slate-200 bg-white/88 px-5 py-3 backdrop-blur-xl sm:px-8 lg:px-10">
+    <div className="sticky top-0 z-50 border-y border-[var(--line)] bg-[var(--nav)] px-5 py-3 backdrop-blur-xl sm:px-8 lg:px-10">
       <nav className="mx-auto flex max-w-7xl items-center justify-between gap-4">
         <a href="#" className="flex items-center gap-3">
-          <span className="grid size-10 place-items-center rounded-full bg-slate-950 text-sm font-black text-white">HM</span>
-          <span className="text-sm font-semibold text-slate-950">Hassan Mezher</span>
+          <span className="grid size-10 place-items-center rounded-full bg-[var(--foreground)] text-sm font-black text-[var(--background)]">HM</span>
+          <span className="text-sm font-semibold text-[var(--foreground)]">Hassan Mezher</span>
         </a>
 
         <div className="hidden items-center gap-1 md:flex">
           {navItems.map((item) => (
-            <a key={item.href} href={item.href} className="rounded-full px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-950">
+            <a key={item.href} href={item.href} className="rounded-full px-4 py-2 text-sm font-medium text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)]">
               {item.label}
             </a>
           ))}
         </div>
 
-        <a href={`mailto:${contactLinks.email}`} className="hidden min-h-10 items-center gap-2 rounded-full bg-blue-600 px-4 text-sm font-semibold text-white transition hover:bg-slate-950 md:inline-flex">
-          Contact
-          <Mail size={16} />
-        </a>
+        <div className="hidden items-center gap-2 md:flex">
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className="grid size-10 place-items-center rounded-full border border-[var(--line)] bg-[var(--surface)] text-[var(--foreground)] transition hover:-translate-y-0.5"
+            aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+          >
+            {theme === "dark" ? <Moon size={17} /> : <Sun size={17} />}
+          </button>
+          <a href={`mailto:${contactLinks.email}`} className="inline-flex min-h-10 items-center gap-2 rounded-full bg-blue-600 px-4 text-sm font-semibold text-white transition hover:bg-[var(--foreground)] hover:text-[var(--background)]">
+            Contact
+            <Mail size={16} />
+          </a>
+        </div>
 
-        <button type="button" onClick={() => setOpen((value) => !value)} aria-label="Toggle navigation" className="grid size-10 place-items-center rounded-full border border-slate-200 bg-white text-slate-950 md:hidden">
-          {open ? <X size={20} /> : <Menu size={20} />}
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className="grid size-10 place-items-center rounded-full border border-[var(--line)] bg-[var(--surface)] text-[var(--foreground)]"
+            aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+          >
+            {theme === "dark" ? <Moon size={17} /> : <Sun size={17} />}
+          </button>
+          <button type="button" onClick={() => setOpen((value) => !value)} aria-label="Toggle navigation" className="grid size-10 place-items-center rounded-full border border-[var(--line)] bg-[var(--surface)] text-[var(--foreground)]">
+            {open ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
       </nav>
 
       {open ? (
-        <div className="mx-auto mt-3 grid max-w-7xl gap-1 rounded-3xl border border-slate-200 bg-white p-2 shadow-xl md:hidden">
+        <div className="mx-auto mt-3 grid max-w-7xl gap-1 rounded-3xl border border-[var(--line)] bg-[var(--surface-solid)] p-2 shadow-xl md:hidden">
           {navItems.map((item) => (
-            <a key={item.href} href={item.href} onClick={() => setOpen(false)} className="rounded-2xl px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-100">
+            <a key={item.href} href={item.href} onClick={() => setOpen(false)} className="rounded-2xl px-4 py-3 text-sm font-semibold text-[var(--muted)] hover:bg-[var(--surface-soft)]">
               {item.label}
             </a>
           ))}
         </div>
       ) : null}
 
-      <motion.div initial={false} animate={{ scaleX: stuck ? 1 : 0 }} className="absolute bottom-0 left-0 h-px w-full origin-left bg-slate-950" />
+      <motion.div initial={false} animate={{ scaleX: stuck ? 1 : 0 }} className="absolute bottom-0 left-0 h-px w-full origin-left bg-[var(--foreground)]" />
     </div>
   );
 }
@@ -220,11 +264,11 @@ function ApiSection() {
         <ApiShell title="GET /stack" className="lg:min-h-[330px]">
           <div className="grid gap-4">
             {Object.entries(stack).map(([group, items]) => (
-              <div key={group} className="rounded-2xl border border-white/10 bg-white/[0.05] p-4">
+              <div key={group} className="rounded-2xl border border-[var(--panel-line)] bg-[var(--panel-soft)] p-4">
                 <p className="mb-3 font-mono text-sm text-lime-300">/{group}</p>
                 <div className="flex flex-wrap gap-2">
                   {items.map((item) => (
-                    <span key={item} className="rounded-full bg-white/10 px-2.5 py-1 text-xs text-slate-200">
+                    <span key={item} className="rounded-full bg-[var(--chip-dark)] px-2.5 py-1 text-xs text-slate-200">
                       {item}
                     </span>
                   ))}
@@ -244,13 +288,13 @@ function Work() {
       <div className="mx-auto max-w-7xl">
         <div className="mb-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <div>
-            <p className="mb-3 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 shadow-sm">
+            <p className="mb-3 inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--subtle)] shadow-sm">
               <span className="size-1.5 rounded-full bg-blue-600" />
               GET /projects
             </p>
-            <h2 className="max-w-2xl text-balance text-4xl font-semibold tracking-[-0.035em] text-slate-950 sm:text-5xl">Selected work, reduced to signal.</h2>
+            <h2 className="max-w-2xl text-balance text-4xl font-semibold tracking-[-0.035em] text-[var(--foreground)] sm:text-5xl">Selected work, reduced to signal.</h2>
           </div>
-          <p className="max-w-sm text-slate-600">Three projects are enough here: one commerce system, one collaboration app, and one secure API-driven product.</p>
+          <p className="max-w-sm text-[var(--muted)]">Three projects are enough here: one commerce system, one collaboration app, and one secure API-driven product.</p>
         </div>
 
         <div className="grid gap-4 lg:grid-cols-3">
@@ -262,17 +306,17 @@ function Work() {
               whileInView="visible"
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.45, delay: index * 0.04 }}
-              className="group rounded-[1.7rem] border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-[0_22px_70px_rgba(15,23,42,0.10)]"
+              className="group rounded-[1.7rem] border border-[var(--line)] bg-[var(--surface-solid)] p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-[0_22px_70px_var(--shadow)]"
             >
-              <div className="mb-6 rounded-[1.3rem] bg-[#101827] p-4 font-mono text-sm text-white">
+              <div className="mb-6 rounded-[1.3rem] bg-[var(--panel)] p-4 font-mono text-sm text-white">
                 <p className="mb-4 text-slate-500">200 OK</p>
                 <p>
                   <Method tone={index === 0 ? "green" : index === 1 ? "blue" : "orange"}>GET</Method> {project.endpoint}
                 </p>
               </div>
               <p className="text-sm font-semibold text-blue-600">{project.type}</p>
-              <h3 className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-slate-950">{project.name}</h3>
-              <p className="mt-4 text-sm leading-7 text-slate-600">{project.description}</p>
+              <h3 className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-[var(--foreground)]">{project.name}</h3>
+              <p className="mt-4 text-sm leading-7 text-[var(--muted)]">{project.description}</p>
               <div className="mt-5 flex flex-wrap gap-2">
                 {project.stack.map((item) => (
                   <Badge key={item}>{item}</Badge>
@@ -299,8 +343,8 @@ function Contact() {
 
   return (
     <section id="contact" className="px-5 py-12 sm:px-8 lg:px-10">
-      <div className="mx-auto grid max-w-7xl gap-6 rounded-[2rem] bg-white p-5 shadow-sm ring-1 ring-slate-200 sm:p-7 lg:grid-cols-[0.8fr_1.2fr]">
-        <div className="rounded-[1.5rem] bg-[#101827] p-6 text-white">
+      <div className="mx-auto grid max-w-7xl gap-6 rounded-[2rem] bg-[var(--surface-solid)] p-5 shadow-sm ring-1 ring-[var(--line)] sm:p-7 lg:grid-cols-[0.8fr_1.2fr]">
+        <div className="rounded-[1.5rem] bg-[var(--panel)] p-6 text-white">
           <Server className="text-lime-300" size={24} />
           <h2 className="mt-8 text-balance text-4xl font-semibold tracking-[-0.04em]">POST /contact</h2>
           <p className="mt-4 text-slate-300">Use this endpoint for roles, project ideas, or collaboration.</p>
@@ -322,18 +366,18 @@ function Contact() {
 
         <form onSubmit={handleSubmit} className="grid content-between gap-4">
           <div className="grid gap-4 sm:grid-cols-2">
-            <label className="grid gap-2 text-sm font-semibold text-slate-700">
+            <label className="grid gap-2 text-sm font-semibold text-[var(--muted)]">
               Name
-              <input name="name" required className="min-h-12 rounded-2xl border border-slate-200 bg-slate-50 px-4 outline-none transition focus:border-blue-600 focus:bg-white" />
+              <input name="name" required className="min-h-12 rounded-2xl border border-[var(--line)] bg-[var(--surface-soft)] px-4 text-[var(--foreground)] outline-none transition focus:border-blue-600 focus:bg-[var(--surface-solid)]" />
             </label>
-            <label className="grid gap-2 text-sm font-semibold text-slate-700">
+            <label className="grid gap-2 text-sm font-semibold text-[var(--muted)]">
               Email
-              <input name="email" type="email" required className="min-h-12 rounded-2xl border border-slate-200 bg-slate-50 px-4 outline-none transition focus:border-blue-600 focus:bg-white" />
+              <input name="email" type="email" required className="min-h-12 rounded-2xl border border-[var(--line)] bg-[var(--surface-soft)] px-4 text-[var(--foreground)] outline-none transition focus:border-blue-600 focus:bg-[var(--surface-solid)]" />
             </label>
           </div>
-          <label className="grid gap-2 text-sm font-semibold text-slate-700">
+          <label className="grid gap-2 text-sm font-semibold text-[var(--muted)]">
             Message
-            <textarea name="message" required className="min-h-32 resize-y rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none transition focus:border-blue-600 focus:bg-white" />
+            <textarea name="message" required className="min-h-32 resize-y rounded-2xl border border-[var(--line)] bg-[var(--surface-soft)] px-4 py-3 text-[var(--foreground)] outline-none transition focus:border-blue-600 focus:bg-[var(--surface-solid)]" />
           </label>
           <button type="submit" className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-blue-600 px-6 text-sm font-semibold text-white transition hover:bg-slate-950 sm:w-fit">
             Send request
@@ -347,7 +391,7 @@ function Contact() {
 
 function Footer() {
   return (
-    <footer className="border-t border-slate-200 px-5 py-6 text-sm text-slate-500 sm:px-8 lg:px-10">
+    <footer className="border-t border-[var(--line)] px-5 py-6 text-sm text-[var(--subtle)] sm:px-8 lg:px-10">
       <div className="mx-auto flex max-w-7xl flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <p>© 2026 Hassan Mezher.</p>
         <p className="flex items-center gap-2">

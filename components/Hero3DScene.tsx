@@ -237,10 +237,10 @@ export function Hero3DScene() {
   }, []);
 
   return (
-    <div className="relative h-[420px] min-h-[420px] overflow-hidden rounded-[2rem] border border-slate-200 bg-white/35 shadow-[0_30px_100px_rgba(36,84,255,0.14)] backdrop-blur sm:h-[560px]">
+    <div className="relative h-[420px] min-h-[420px] overflow-hidden rounded-[2rem] border border-[var(--line)] bg-[var(--surface)] shadow-[0_30px_100px_var(--shadow)] backdrop-blur sm:h-[560px]">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(36,84,255,0.14),transparent_42%),radial-gradient(circle_at_82%_18%,rgba(163,230,53,0.18),transparent_28%)]" />
       <canvas ref={canvasRef} className="relative h-full w-full" aria-label="Interactive 3D portfolio API visualization" />
-      <div className="pointer-events-none absolute left-5 top-5 rounded-full border border-slate-200 bg-white/80 px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-sm backdrop-blur">
+      <div className="pointer-events-none absolute left-5 top-5 rounded-full border border-[var(--line)] bg-[var(--surface)] px-3 py-1.5 text-xs font-semibold text-[var(--muted)] shadow-sm backdrop-blur">
         live API map
       </div>
     </div>

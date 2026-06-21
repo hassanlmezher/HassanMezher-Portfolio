@@ -1,10 +1,49 @@
 @import "tailwindcss";
 
 :root {
-  color-scheme: light;
+  color-scheme: light dark;
   --background: #f6f8fb;
   --foreground: #101828;
+  --muted: #475569;
+  --subtle: #64748b;
+  --line: #e2e8f0;
+  --surface: rgba(255, 255, 255, 0.88);
+  --surface-solid: #ffffff;
+  --surface-soft: #f8fafc;
+  --nav: rgba(255, 255, 255, 0.88);
+  --panel: #101827;
+  --panel-soft: rgba(255, 255, 255, 0.05);
+  --panel-line: rgba(255, 255, 255, 0.1);
+  --panel-text: #ffffff;
+  --chip: #ffffff;
+  --chip-dark: rgba(255, 255, 255, 0.1);
+  --shadow: rgba(15, 23, 42, 0.12);
   --blue: #2454ff;
+  --grid: rgba(15, 23, 42, 0.035);
+  --glow: rgba(36, 84, 255, 0.13);
+}
+
+:root.dark {
+  color-scheme: dark;
+  --background: #070b13;
+  --foreground: #f8fafc;
+  --muted: #cbd5e1;
+  --subtle: #94a3b8;
+  --line: rgba(148, 163, 184, 0.2);
+  --surface: rgba(15, 23, 42, 0.78);
+  --surface-solid: #0f172a;
+  --surface-soft: rgba(15, 23, 42, 0.9);
+  --nav: rgba(7, 11, 19, 0.82);
+  --panel: #030712;
+  --panel-soft: rgba(255, 255, 255, 0.06);
+  --panel-line: rgba(255, 255, 255, 0.12);
+  --panel-text: #ffffff;
+  --chip: rgba(15, 23, 42, 0.86);
+  --chip-dark: rgba(255, 255, 255, 0.1);
+  --shadow: rgba(0, 0, 0, 0.28);
+  --blue: #5b7cff;
+  --grid: rgba(148, 163, 184, 0.07);
+  --glow: rgba(91, 124, 255, 0.2);
 }
 
 * {
@@ -19,10 +58,10 @@ body {
   min-height: 100vh;
   margin: 0;
   background:
-    linear-gradient(rgba(15, 23, 42, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(15, 23, 42, 0.035) 1px, transparent 1px),
-    radial-gradient(circle at 80% 5%, rgba(36, 84, 255, 0.13), transparent 36rem),
-    linear-gradient(180deg, #f8fafc 0%, #f6f8fb 52%, #ffffff 100%);
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+    radial-gradient(circle at 80% 5%, var(--glow), transparent 36rem),
+    var(--background);
   background-size: 44px 44px, 44px 44px, auto, auto;
   color: var(--foreground);
   font-family: var(--font-inter), system-ui, sans-serif;
@@ -31,7 +70,7 @@ body {
 
 ::selection {
   background: rgba(36, 84, 255, 0.18);
-  color: #101828;
+  color: var(--foreground);
 }
 
 a {
