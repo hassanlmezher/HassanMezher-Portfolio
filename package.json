@@ -12,12 +12,13 @@
     "verify:visual": "node scripts/visual-check.mjs"
   },
   "dependencies": {
-    "framer-motion": "^12.23.26",
+    "framer-motion": "^12.42.2",
     "lucide-react": "^0.561.0",
     "next": "^16.0.10",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
-    "three": "^0.184.0"
+    "three": "^0.184.0",
+    "zustand": "^5.0.14"
   },
   "devDependencies": {
     "@playwright/test": "^1.61.0",

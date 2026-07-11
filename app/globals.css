@@ -1,100 +1,269 @@
 @import "tailwindcss";
 
+/* ─── Design Tokens ─────────────────────────────────────────────────── */
 :root {
-  color-scheme: light dark;
-  --background: #f6f8fb;
-  --foreground: #101828;
-  --muted: #475569;
-  --subtle: #64748b;
-  --line: #e2e8f0;
-  --surface: rgba(255, 255, 255, 0.88);
-  --surface-solid: #ffffff;
-  --surface-soft: #f8fafc;
-  --nav: rgba(255, 255, 255, 0.88);
-  --panel: #101827;
-  --panel-soft: rgba(255, 255, 255, 0.05);
-  --panel-line: rgba(255, 255, 255, 0.1);
-  --panel-text: #ffffff;
-  --chip: #ffffff;
-  --chip-dark: rgba(255, 255, 255, 0.1);
-  --shadow: rgba(15, 23, 42, 0.12);
-  --blue: #2454ff;
-  --grid: rgba(15, 23, 42, 0.035);
-  --glow: rgba(36, 84, 255, 0.13);
-}
-
-:root.dark {
   color-scheme: dark;
-  --background: #070b13;
-  --foreground: #f8fafc;
-  --muted: #cbd5e1;
-  --subtle: #94a3b8;
-  --line: rgba(148, 163, 184, 0.2);
-  --surface: rgba(15, 23, 42, 0.78);
-  --surface-solid: #0f172a;
-  --surface-soft: rgba(15, 23, 42, 0.9);
-  --nav: rgba(7, 11, 19, 0.82);
-  --panel: #030712;
-  --panel-soft: rgba(255, 255, 255, 0.06);
-  --panel-line: rgba(255, 255, 255, 0.12);
-  --panel-text: #ffffff;
-  --chip: rgba(15, 23, 42, 0.86);
-  --chip-dark: rgba(255, 255, 255, 0.1);
-  --shadow: rgba(0, 0, 0, 0.28);
-  --blue: #5b7cff;
-  --grid: rgba(148, 163, 184, 0.07);
-  --glow: rgba(91, 124, 255, 0.2);
+
+  /* Core backgrounds */
+  --background:      #050810;
+  --surface:         rgba(10, 14, 26, 0.85);
+  --surface-solid:   #0a0e1a;
+  --surface-soft:    rgba(15, 20, 35, 0.7);
+  --panel:           #070b18;
+  --panel-soft:      rgba(255, 255, 255, 0.04);
+  --panel-line:      rgba(255, 255, 255, 0.08);
+  --nav:             rgba(5, 8, 16, 0.88);
+
+  /* Foregrounds */
+  --foreground:      #f0f4ff;
+  --muted:           #8892a4;
+  --subtle:          #5a6478;
+  --panel-text:      #f0f4ff;
+
+  /* Accent palette */
+  --neon-green:      #00ff88;
+  --neon-green-dim:  rgba(0, 255, 136, 0.15);
+  --neon-blue:       #4d8fff;
+  --neon-blue-dim:   rgba(77, 143, 255, 0.15);
+  --neon-amber:      #ffb347;
+  --neon-amber-dim:  rgba(255, 179, 71, 0.15);
+  --neon-pink:       #ff6b9d;
+  --neon-cyan:       #00e5ff;
+
+  /* Lines & borders */
+  --line:            rgba(255, 255, 255, 0.08);
+  --line-bright:     rgba(255, 255, 255, 0.14);
+
+  /* Glass */
+  --glass:           rgba(10, 14, 28, 0.72);
+  --glass-border:    rgba(255, 255, 255, 0.1);
+  --glass-highlight: rgba(255, 255, 255, 0.05);
+
+  /* Chips */
+  --chip:            rgba(255, 255, 255, 0.08);
+  --chip-text:       #b0bccc;
+
+  /* Shadows */
+  --shadow:          rgba(0, 0, 0, 0.5);
+  --shadow-neon:     rgba(0, 255, 136, 0.2);
+  --shadow-blue:     rgba(77, 143, 255, 0.2);
+
+  /* Grid */
+  --grid:            rgba(77, 143, 255, 0.055);
+  --grid-bright:     rgba(0, 255, 136, 0.07);
+  --glow:            rgba(77, 143, 255, 0.18);
+
+  /* Terminal */
+  --terminal-bg:     #020408;
+  --terminal-green:  #00ff88;
+  --terminal-prompt: #4d8fff;
 }
 
-* {
-  box-sizing: border-box;
+/* ─── Light Mode Overrides ───────────────────────────────────────────── */
+:root.light {
+  color-scheme: light;
+  --background:      #f4f6fc;
+  --surface:         rgba(255, 255, 255, 0.85);
+  --surface-solid:   #ffffff;
+  --surface-soft:    #f8faff;
+  --panel:           #111827;
+  --panel-soft:      rgba(255, 255, 255, 0.06);
+  --panel-line:      rgba(255, 255, 255, 0.12);
+  --nav:             rgba(244, 246, 252, 0.9);
+  --foreground:      #0f1728;
+  --muted:           #4a5568;
+  --subtle:          #6b7280;
+  --panel-text:      #ffffff;
+  --line:            rgba(15, 23, 42, 0.1);
+  --line-bright:     rgba(15, 23, 42, 0.18);
+  --glass:           rgba(255, 255, 255, 0.8);
+  --glass-border:    rgba(15, 23, 42, 0.12);
+  --glass-highlight: rgba(255, 255, 255, 0.6);
+  --chip:            rgba(15, 23, 42, 0.07);
+  --chip-text:       #374151;
+  --shadow:          rgba(15, 23, 42, 0.12);
+  --shadow-neon:     rgba(0, 200, 100, 0.15);
+  --shadow-blue:     rgba(30, 100, 255, 0.15);
+  --grid:            rgba(15, 23, 42, 0.04);
+  --grid-bright:     rgba(0, 180, 100, 0.05);
+  --glow:            rgba(30, 100, 255, 0.1);
+  --neon-green:      #00b865;
+  --neon-blue:       #2563eb;
+  --neon-amber:      #d97706;
+  --neon-cyan:       #0891b2;
 }
+
+/* ─── Reset ──────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
 
 html {
   background: var(--background);
+  scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
   min-height: 100vh;
   margin: 0;
   background:
-    linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px),
-    radial-gradient(circle at 80% 5%, var(--glow), transparent 36rem),
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(77, 143, 255, 0.10), transparent),
     var(--background);
-  background-size: 44px 44px, 44px 44px, auto, auto;
   color: var(--foreground);
   font-family: var(--font-inter), system-ui, sans-serif;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+
+/* ─── Scroll ─────────────────────────────────────────────────────────── */
+section { scroll-margin-top: 72px; }
+
+/* ─── Typography ─────────────────────────────────────────────────────── */
+a { text-decoration: none; }
+button, input, textarea, select { font: inherit; }
+.text-balance { text-wrap: balance; }
+
 ::selection {
-  background: rgba(36, 84, 255, 0.18);
+  background: rgba(77, 143, 255, 0.25);
   color: var(--foreground);
 }
 
-a {
-  text-decoration: none;
+/* ─── Scrollbar ──────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--background); }
+::-webkit-scrollbar-thumb { background: var(--line-bright); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+/* ─── Glassmorphic Panel ─────────────────────────────────────────────── */
+.glass-panel {
+  background: var(--glass);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  border-radius: 1.5rem;
 }
 
-section {
-  scroll-margin-top: 86px;
+/* ─── Terminal Window Chrome ─────────────────────────────────────────── */
+.terminal-window {
+  background: var(--terminal-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 1rem;
+  overflow: hidden;
 }
 
-button,
-input,
-textarea {
-  font: inherit;
+.terminal-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid var(--glass-border);
 }
 
-.text-balance {
-  text-wrap: balance;
+.traffic-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
 }
 
+/* ─── IDE Window Chrome ──────────────────────────────────────────────── */
+.ide-window {
+  background: #0c1120;
+  border: 1px solid var(--glass-border);
+  border-radius: 1.2rem;
+  overflow: hidden;
+}
+
+.ide-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  background: #080d1a;
+  border-bottom: 1px solid var(--glass-border);
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* ─── Neon Glow Borders ──────────────────────────────────────────────── */
+.neon-border-green {
+  box-shadow: 0 0 0 1px rgba(0, 255, 136, 0.3),
+              inset 0 0 20px rgba(0, 255, 136, 0.03);
+}
+.neon-border-blue {
+  box-shadow: 0 0 0 1px rgba(77, 143, 255, 0.35),
+              inset 0 0 20px rgba(77, 143, 255, 0.04);
+}
+
+/* ─── Keyframe Animations ────────────────────────────────────────────── */
+
+/* Typing cursor blink */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+.cursor-blink { animation: blink 1.1s step-start infinite; }
+
+/* Shimmer sweep */
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.06) 50%,
+    transparent 100%
+  );
+  background-size: 200% auto;
+  animation: shimmer 2.4s linear infinite;
+}
+
+/* Neon pulse ring */
+@keyframes neon-pulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(0, 255, 136, 0.4); }
+  50%       { box-shadow: 0 0 22px rgba(0, 255, 136, 0.7), 0 0 40px rgba(0, 255, 136, 0.2); }
+}
+.pulse-green { animation: neon-pulse 2.2s ease-in-out infinite; }
+
+/* Spin loader */
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+.spin-slow { animation: spin-slow 3s linear infinite; }
+
+/* Fadeup */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fade-up 0.5s ease both; }
+
+/* Status dot online */
+@keyframes status-ping {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%       { transform: scale(1.9); opacity: 0; }
+}
+.status-dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: inherit;
+  animation: status-ping 1.8s ease-in-out infinite;
+}
+
+/* Grid glow pulse */
+@keyframes grid-pulse {
+  0%, 100% { opacity: 0.55; }
+  50%       { opacity: 1; }
+}
+
+/* ─── Reduced Motion ─────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;

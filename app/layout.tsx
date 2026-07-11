@@ -1,11 +1,18 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono, Outfit } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
+});
+
+const outfit = Outfit({
+  variable: "--font-outfit",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
 });
 
 const jetbrains = JetBrains_Mono({
@@ -49,8 +56,21 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#f8fafc",
+  themeColor: "#050810",
 };
+
+// Prevent FOUC — reads localStorage and applies theme class before React hydrates
+const themeScript = `
+(function() {
+  try {
+    var t = localStorage.getItem('hm-theme');
+    if (t === 'light') {
+      document.documentElement.classList.add('light');
+    }
+    // default is dark (no class needed — CSS vars defined on :root are dark by default)
+  } catch(e) {}
+})();
+`;
 
 export default function RootLayout({
   children,
@@ -58,8 +78,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
-      <body className={`${inter.variable} ${jetbrains.variable} antialiased`}>
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
+      <body className={`${inter.variable} ${outfit.variable} ${jetbrains.variable} antialiased`}>
         {children}
       </body>
     </html>
