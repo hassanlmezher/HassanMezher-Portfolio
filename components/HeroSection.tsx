@@ -136,7 +136,7 @@ export function HeroSection() {
           initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] as const }}
-          className="relative flex h-[320px] w-full items-center justify-center overflow-hidden order-1 lg:order-2 lg:h-auto lg:min-h-[600px] lg:overflow-visible"
+          className="relative flex h-[450px] sm:h-[500px] w-full items-center justify-center overflow-visible order-1 lg:order-2 lg:h-auto lg:min-h-[600px]"
         >
           {/* Subtle glow ring behind globe */}
           <div
