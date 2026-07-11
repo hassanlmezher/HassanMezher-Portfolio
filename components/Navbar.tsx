@@ -36,9 +36,9 @@ export function Navbar() {
 
   return (
     <header
-      className="sticky top-0 z-50 border-b"
+      className="sticky top-0 z-50 border-b transition-colors duration-300"
       style={{
-        background: "rgba(5, 7, 15, 0.85)",
+        background: theme === "light" ? "rgba(255, 255, 255, 0.85)" : "rgba(5, 7, 15, 0.85)",
         backdropFilter: "blur(20px)",
         WebkitBackdropFilter: "blur(20px)",
         borderColor: "var(--line)",
