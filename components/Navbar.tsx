@@ -90,7 +90,7 @@ export function Navbar() {
               color: "var(--muted)",
             }}
           >
-            {theme === "dark" ? <Sun size={15} /> : <Moon size={15} />}
+            {theme === "dark" ? <Moon size={15} /> : <Sun size={15} />}
           </button>
 
           <a
