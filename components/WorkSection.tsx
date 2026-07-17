@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowUpRight, Play, Pause } from "lucide-react";
 
@@ -36,7 +36,17 @@ function ProjectCard({
   index: number;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [playing, setPlaying] = useState(false);
+  const [playing, setPlaying] = useState(true);
+
+  // Auto-play video on mount
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => {
+        // Autoplay policy fallback
+        setPlaying(false);
+      });
+    }
+  }, []);
 
   const togglePlay = () => {
     if (!videoRef.current) return;
@@ -77,9 +87,11 @@ function ProjectCard({
         <video
           ref={videoRef}
           src={project.video}
+          autoPlay
           muted
           playsInline
           loop
+          preload="auto"
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
           onPlay={() => setPlaying(true)}
           onPause={() => setPlaying(false)}
