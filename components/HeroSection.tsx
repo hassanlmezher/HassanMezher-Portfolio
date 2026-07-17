@@ -89,8 +89,10 @@ export function HeroSection() {
               <ArrowRight size={15} />
             </a>
             <a
-              href="/hassan-cv.pdf"
-              download
+              href="/Hassan_Mezher_CV.pdf"
+              download="Hassan_Mezher_CV.pdf"
+              target="_blank"
+              rel="noreferrer"
               className="inline-flex items-center gap-2 rounded-xl border px-6 py-3 text-sm font-semibold transition-all duration-200 hover:-translate-y-0.5"
               style={{
                 borderColor: "var(--line-bright)",
