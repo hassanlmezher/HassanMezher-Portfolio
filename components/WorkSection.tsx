@@ -13,7 +13,7 @@ const projects = [
     video: "/projects-video/shopora.mp4",
     accent: "#4d8fff",
     tag: "E-Commerce · Multi-Vendor",
-    href: "https://github.com/hassanlmezher",
+    href: "https://github.com/hassanlmezher/shopora-project",
   },
   {
     name: "Salon Pastel",
@@ -23,7 +23,7 @@ const projects = [
     video: "/projects-video/salonPastel.mp4",
     accent: "#e879f9",
     tag: "Booking · Luxury",
-    href: "https://github.com/hassanlmezher",
+    href: "https://github.com/hassanlmezher/Salon-Pastel",
   },
 ];
 
