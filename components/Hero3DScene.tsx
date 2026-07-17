@@ -404,7 +404,7 @@ export function Hero3DScene() {
 
       {/* Hover instruction */}
       <div
-        className="pointer-events-none absolute bottom-4 right-4 rounded-full border px-3 py-1.5 text-xs font-mono backdrop-blur"
+        className="pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full border px-3 py-1.5 text-xs font-mono backdrop-blur whitespace-nowrap"
         style={{
           borderColor: "var(--glass-border)",
           background: "var(--glass)",
