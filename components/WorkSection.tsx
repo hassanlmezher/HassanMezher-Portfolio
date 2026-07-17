@@ -1,10 +1,23 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { ArrowUpRight, Play, Pause } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowUpRight, Play, Pause, ExternalLink } from "lucide-react";
 
-const projects = [
+// ─── Data ─────────────────────────────────────────────────────────────────────
+
+interface Project {
+  name: string;
+  description: string;
+  stack: string[];
+  video: string;
+  accent: string;
+  tag: string;
+  href: string;
+  linkLabel: string;
+}
+
+const devProjects: Project[] = [
   {
     name: "Shopora",
     description:
@@ -14,6 +27,7 @@ const projects = [
     accent: "#4d8fff",
     tag: "E-Commerce · Multi-Vendor",
     href: "https://github.com/hassanlmezher/shopora-project",
+    linkLabel: "View on GitHub",
   },
   {
     name: "Salon Pastel",
@@ -24,25 +38,48 @@ const projects = [
     accent: "#e879f9",
     tag: "Booking · Luxury",
     href: "https://github.com/hassanlmezher/Salon-Pastel",
+    linkLabel: "View on GitHub",
   },
 ];
 
+const uiuxProjects: Project[] = [
+  {
+    name: "Medibooks",
+    description:
+      "Medibooks is a medical appointment booking app designed in Figma, focused on providing patients with a clean, accessible, and intuitive scheduling experience. The design emphasises a calm and trustworthy visual language with structured layouts, clear information hierarchy, and a seamless user flow from browsing doctors to confirming appointments.",
+    stack: ["Figma", "UI Design", "UX Research", "Prototyping", "User Flows"],
+    video: "/projects-video/Medibooks.mov",
+    accent: "#00e5ff",
+    tag: "Healthcare · Booking App",
+    href: "https://www.figma.com/proto/swTwysp1FVzGCEKVu5usEA/Assignment-2?node-id=142-879&t=3JccqDJHWsSGBhZc-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=156%3A2109",
+    linkLabel: "View Prototype",
+  },
+];
+
+// ─── Tabs ─────────────────────────────────────────────────────────────────────
+
+type Tab = "dev" | "uiux";
+
+const TABS: { id: Tab; label: string; emoji: string }[] = [
+  { id: "dev",  label: "Full-Stack", emoji: "⚡" },
+  { id: "uiux", label: "UI / UX",    emoji: "🎨" },
+];
+
 // ─── Video Player Card ────────────────────────────────────────────────────────
+
 function ProjectCard({
   project,
   index,
 }: {
-  project: (typeof projects)[number];
+  project: Project;
   index: number;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(true);
 
-  // Auto-play video on mount
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.play().catch(() => {
-        // Autoplay policy fallback
         setPlaying(false);
       });
     }
@@ -177,7 +214,7 @@ function ProjectCard({
           ))}
         </div>
 
-        {/* GitHub link */}
+        {/* Link */}
         <a
           href={project.href}
           target="_blank"
@@ -185,7 +222,12 @@ function ProjectCard({
           className="mt-5 inline-flex w-fit items-center gap-1.5 text-sm font-medium transition-opacity hover:opacity-70"
           style={{ color: project.accent }}
         >
-          View on GitHub <ArrowUpRight size={14} />
+          {project.linkLabel}
+          {project.linkLabel === "View Prototype" ? (
+            <ExternalLink size={14} />
+          ) : (
+            <ArrowUpRight size={14} />
+          )}
         </a>
       </div>
     </motion.article>
@@ -193,7 +235,11 @@ function ProjectCard({
 }
 
 // ─── Section ─────────────────────────────────────────────────────────────────
+
 export function WorkSection() {
+  const [activeTab, setActiveTab] = useState<Tab>("dev");
+  const projects = activeTab === "dev" ? devProjects : uiuxProjects;
+
   return (
     <section id="work" className="px-4 py-16 sm:px-6 lg:py-24">
       <div className="mx-auto max-w-[1200px]">
@@ -204,7 +250,7 @@ export function WorkSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="mb-14 text-center lg:text-left"
+          className="mb-10 text-center lg:text-left"
         >
           <p
             className="mb-3 text-sm font-semibold uppercase tracking-widest"
@@ -223,12 +269,71 @@ export function WorkSection() {
           </h2>
         </motion.div>
 
+        {/* ── Tab switcher ──────────────────────────────────────── */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: 0.1 }}
+          className="mb-10 flex justify-center lg:justify-start"
+        >
+          <div
+            className="inline-flex rounded-xl border p-1 gap-1"
+            style={{
+              borderColor: "var(--line)",
+              background: "rgba(255,255,255,0.02)",
+            }}
+          >
+            {TABS.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className="relative rounded-lg px-5 py-2 text-sm font-semibold transition-all duration-200"
+                style={{
+                  color: activeTab === tab.id ? "#fff" : "var(--muted)",
+                  fontFamily: "var(--font-outfit), sans-serif",
+                }}
+              >
+                {/* Active pill background */}
+                {activeTab === tab.id && (
+                  <motion.span
+                    layoutId="tab-pill"
+                    className="absolute inset-0 rounded-lg"
+                    style={{
+                      background:
+                        tab.id === "dev"
+                          ? "linear-gradient(135deg, #4d8fff22, #4d8fff44)"
+                          : "linear-gradient(135deg, #00e5ff22, #00e5ff44)",
+                      border: `1px solid ${tab.id === "dev" ? "#4d8fff55" : "#00e5ff55"}`,
+                    }}
+                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10 flex items-center gap-2">
+                  <span>{tab.emoji}</span>
+                  {tab.label}
+                </span>
+              </button>
+            ))}
+          </div>
+        </motion.div>
+
         {/* Project grid — single col on mobile, 2 cols on lg+ */}
-        <div className="grid gap-6 lg:grid-cols-2">
-          {projects.map((project, i) => (
-            <ProjectCard key={project.name} project={project} index={i} />
-          ))}
-        </div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="grid gap-6 lg:grid-cols-2"
+          >
+            {projects.map((project, i) => (
+              <ProjectCard key={project.name} project={project} index={i} />
+            ))}
+          </motion.div>
+        </AnimatePresence>
+
       </div>
     </section>
   );
